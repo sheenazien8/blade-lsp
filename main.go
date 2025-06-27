@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"educationalsp/analysis"
-	"educationalsp/lsp"
-	"educationalsp/rpc"
+	"github.com/sheenazien8/blade-lsp/analysis"
+	"github.com/sheenazien8/blade-lsp/lsp"
+	"github.com/sheenazien8/blade-lsp/rpc"
 	"encoding/json"
 	"io"
 	"log"
@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	logger := getLogger("/home/tjdevries/git/educationalsp/log.txt")
+	logger := getLogger(os.Getenv("HOME") + "/Documents/Code/fun/blade-lsp.nvim/logs/log.txt")
 	logger.Println("Hey, I started!")
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -47,7 +47,6 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 			request.Params.ClientInfo.Name,
 			request.Params.ClientInfo.Version)
 
-		// hey... let's reply!
 		msg := lsp.NewInitializeResponse(request.ID)
 		writeResponse(writer, msg)
 
@@ -99,10 +98,8 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 			return
 		}
 
-		// Create a response
 		response := state.Hover(request.ID, request.Params.TextDocument.URI, request.Params.Position)
 
-		// Write it back
 		writeResponse(writer, response)
 	case "textDocument/definition":
 		var request lsp.DefinitionRequest
@@ -111,10 +108,8 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 			return
 		}
 
-		// Create a response
 		response := state.Definition(request.ID, request.Params.TextDocument.URI, request.Params.Position)
 
-		// Write it back
 		writeResponse(writer, response)
 	case "textDocument/codeAction":
 		var request lsp.CodeActionRequest
@@ -123,10 +118,8 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 			return
 		}
 
-		// Create a response
 		response := state.TextDocumentCodeAction(request.ID, request.Params.TextDocument.URI)
 
-		// Write it back
 		writeResponse(writer, response)
 	case "textDocument/completion":
 		var request lsp.CompletionRequest
@@ -135,10 +128,8 @@ func handleMessage(logger *log.Logger, writer io.Writer, state analysis.State, m
 			return
 		}
 
-		// Create a response
-		response := state.TextDocumentCompletion(request.ID, request.Params.TextDocument.URI)
+		response := state.TextDocumentCompletion(request.ID, request.Params.TextDocument.URI, request.Params.Position)
 
-		// Write it back
 		writeResponse(writer, response)
 	}
 }
@@ -155,5 +146,5 @@ func getLogger(filename string) *log.Logger {
 		panic("hey, you didnt give me a good file")
 	}
 
-	return log.New(logfile, "[educationalsp]", log.Ldate|log.Ltime|log.Lshortfile)
+	return log.New(logfile, "[blade-lsp]", log.Ldate|log.Ltime|log.Lshortfile)
 }

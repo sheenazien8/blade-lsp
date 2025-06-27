@@ -7,6 +7,12 @@ type CompletionRequest struct {
 
 type CompletionParams struct {
 	TextDocumentPositionParams
+	Context CompletionContext `json:"context,omitempty"`
+}
+
+type CompletionContext struct {
+	TriggerKind      int    `json:"triggerKind"`
+	TriggerCharacter string `json:"triggerCharacter,omitempty"`
 }
 
 type CompletionResponse struct {
@@ -15,7 +21,10 @@ type CompletionResponse struct {
 }
 
 type CompletionItem struct {
-	Label         string `json:"label"`
-	Detail        string `json:"detail"`
-	Documentation string `json:"documentation"`
+	Label            string `json:"label"`
+	Kind             int    `json:"kind,omitempty"`
+	Detail           string `json:"detail"`
+	Documentation    string `json:"documentation"`
+	InsertText       string `json:"insertText,omitempty"`
+	InsertTextFormat int    `json:"insertTextFormat,omitempty"`
 }

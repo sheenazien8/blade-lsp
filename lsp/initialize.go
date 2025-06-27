@@ -7,7 +7,6 @@ type InitializeRequest struct {
 
 type InitializeRequestParams struct {
 	ClientInfo *ClientInfo `json:"clientInfo"`
-	// ... there's tons more that goes here
 }
 
 type ClientInfo struct {
@@ -54,7 +53,7 @@ func NewInitializeResponse(id int) InitializeResponse {
 				CompletionProvider: map[string]any{},
 			},
 			ServerInfo: ServerInfo{
-				Name:    "educationalsp",
+				Name:    "blade-lsp",
 				Version: "0.0.0.0.0.0-beta1.final",
 			},
 		},

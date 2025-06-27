@@ -1,7 +1,7 @@
 package rpc_test
 
 import (
-	"educationalsp/rpc"
+	"github.com/sheenazien8/blade-lsp/rpc"
 	"testing"
 )
 

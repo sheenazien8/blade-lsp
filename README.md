@@ -1,4 +1,4 @@
-# `educationalsp`
+# `blade-lsp`
 
 A Language Server built for the educational purpose of understanding **WHAT** LSP is and **HOW** it works.
 
